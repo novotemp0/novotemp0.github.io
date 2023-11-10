@@ -730,6 +730,8 @@ background-position-y: 70px;
 .team_section {
     max-width: 993px;
     margin: 0 auto;
+    justify-content: center;
+      align-items: center;
 }
 
 .team_area {
