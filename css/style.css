@@ -5,8 +5,8 @@ Licence under Creative Commons Attribution 3.0
 -------------------------------------------------------*/
 
 @charset "utf-8";
-@import url(http://fonts.googleapis.com/css?family=Raleway:800,700,400);
-@import url(http://fonts.googleapis.com/css?family=Signika:400,600);
+@import url("https://fonts.googleapis.com/css?family=Raleway:800,700,400");
+@import url("https://fonts.googleapis.com/css?family=Signika:400,600");
 
 /* Reset
 ---------------------------------*/
@@ -246,7 +246,8 @@ p {
     font-weight: 700;
 }
 
-.top_left_cont h2 {
+.top_left_cont h2,
+.top_left_cont .hero-title {
     font-size: 40px;
     color: #000;
     line-height: 52px;
@@ -255,7 +256,8 @@ p {
     text-align: center;
 }
 
-.top_left_cont h2 strong {
+.top_left_cont h2 strong,
+.top_left_cont .hero-title strong {
     font-weight: 700;
 	color:#EFB21D;
 }
@@ -1229,6 +1231,7 @@ margin-bottom: 5px;
 
 #portfolio_wrapper {
     position: relative;
+    overflow: hidden;
     padding: 0;
     width: 100%;
     margin: 0 auto;
@@ -1730,8 +1733,9 @@ padding-top: 10px;
 .top_left_cont {
 padding: 38px 0;
 }
-.top_left_cont h2 {
-font-size: 25px; 
+.top_left_cont h2,
+.top_left_cont .hero-title {
+font-size: 25px;
 line-height: 39px;
 margin: 0 0 9px 0;
 }

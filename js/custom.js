@@ -5,17 +5,16 @@ Licence under Creative Commons Attribution 3.0
 Do not remove the back-link in this web template 
 -------------------------------------------------------*/
 
-$(window).load(function() {
-    jQuery('#all').click();
-    return false;
+$(window).on('load', function() {
+    var $all = jQuery('#filters a[data-filter="*"], #all');
+    if ($all.length) $all.first().click();
 });
 
 $(document).ready(function() {
     $('#header_wrapper').scrollToFixed();
     $('.res-nav_click').click(function() {
         $('.main-nav').slideToggle();
-        return false
-
+        return false;
     });
 	
     function resizeText() {
@@ -57,27 +56,6 @@ $(document).ready(function() {
 
     var container = $('#portfolio_wrapper');
 
-
-    container.isotope({
-        animationEngine: 'best-available',
-        animationOptions: {
-            duration: 200,
-            queue: false
-        },
-        layoutMode: 'fitRows'
-    });
-
-    $('#filters a').click(function() {
-        $('#filters a').removeClass('active');
-        $(this).addClass('active');
-        var selector = $(this).attr('data-filter');
-        container.isotope({
-            filter: selector
-        });
-        setProjects();
-        return false;
-    });
-
     function splitColumns() {
         var winWidth = $(window).width(),
             columnNumb = 1;
@@ -113,12 +91,36 @@ $(document).ready(function() {
         container.isotope('reLayout');
     }
 
+    // Define colunas antes do Isotope para o primeiro layout já usar larguras corretas
+    setColumns();
+
+    container.isotope({
+        animationEngine: 'best-available',
+        animationOptions: {
+            duration: 200,
+            queue: false
+        },
+        layoutMode: 'fitRows'
+    });
+
+    $('#filters a').click(function() {
+        $('#filters a').removeClass('active');
+        $(this).addClass('active');
+        var selector = $(this).attr('data-filter');
+        container.isotope({
+            filter: selector
+        });
+        setProjects();
+        return false;
+    });
+
+    // Quando todas as imagens do portfólio carregarem, recalcular o layout (corrige carregamento inicial)
     container.imagesLoaded(function() {
-        setColumns();
+        setProjects();
     });
 
 
-    $(window).bind('resize', function() {
+    $(window).on('resize', function() {
         setProjects();
     });
 
@@ -130,11 +132,13 @@ wow = new WOW({
     offset: 100
 });
 wow.init();
-document.getElementById('').onclick = function() {
-    var section = document.createElement('section');
-    section.className = 'wow fadeInDown';
-    section.className = 'wow shake';
-    section.className = 'wow zoomIn';
-    section.className = 'wow lightSpeedIn';
-    this.parentNode.insertBefore(section, this);
-};
+
+// Atualiza aria-expanded do botão do menu ao abrir/fechar (acessibilidade)
+var $navToggle = $('#nav-toggle');
+var $mainNav = $('#main-nav');
+if ($navToggle.length && $mainNav.length) {
+    $mainNav.on('show.bs.collapse hide.bs.collapse', function() {
+        var expanded = $mainNav.hasClass('in');
+        $navToggle.attr('aria-expanded', expanded);
+    });
+}
